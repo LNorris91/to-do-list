@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+}
+
+header,
+div {
+    border: 1px solid green;
+}
+
+header {
+    height: 100px;
+}
+
+.content {
+    display: flex;
+    height: calc(100vh - 100px);
+}
+
+.sideBar {
+    width: 300px;
+}
+
+.main {
+    flex-grow: 1;
+}
