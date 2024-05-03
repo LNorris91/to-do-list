@@ -1,13 +1,9 @@
-import dom from "./dom"
+import projects from "./projects"
+
+console.log("tasks.js has been initialized")
 
 const tasks = (() => {
-    function showTasks() {
-        
-    }
-
-    return {
-        showTasks
-    }
+     
 })()
 
 export default tasks

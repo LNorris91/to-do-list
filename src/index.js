@@ -1,9 +1,10 @@
 import _ from "lodash";
 import {formatDistanceToNow, format} from "date-fns";
-import './style.css'
-import projects from "./projects";
 import dom from "./dom";
+import projects from "./projects";
+import tasks from "./tasks";
+import './style.css'
 
 
-dom.showProjects()
+dom.updateScreen()
 

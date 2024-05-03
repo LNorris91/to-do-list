@@ -1,6 +1,8 @@
-import dom from "./dom";
+
+console.log("projects.js has been initialized")
 
 const projects = (() => {
+    
 
     const projectList = [
         {
@@ -26,12 +28,10 @@ const projects = (() => {
     function addProject(title) {
         const newProject = new Project(title);
         projectList.push(newProject);
-        dom.showProjects()
     }
 
     function deleteProject(index) {
         projectList.splice(index, 1);
-        dom.showProjects()
     }
 
     function editProject(index) {
@@ -41,7 +41,6 @@ const projects = (() => {
                 else {
                     projectList[index].title = name
                     input.require = false
-                    dom.showProjects()
     }}
 
     return {
