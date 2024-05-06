@@ -18,22 +18,13 @@ const dom = (() => {
         updateScreen()
     });
     removeProjectBtn.addEventListener("click", () => {
-        projects.deleteProject(projectIndex)
-        activeProject = projects.projectList[0]
+        projects.deleteProject(projects.getProjectIndex())
         updateScreen()
     })
     editProjectBtn.addEventListener("click", () => {
-        projects.editProject(projectIndex)
-        setActiveProject()
+        projects.editProject(projects.getProjectIndex())
         updateScreen()
-        console.log(activeProject)
     })
-    
-    let projectIndex = "0"
-    let activeProject = projects.projectList[projectIndex]
-    function setActiveProject() {
-        activeProject = projects.projectList[projectIndex]
-    }
 
     function showProjects() {
         sideBar.textContent = '';
@@ -45,22 +36,23 @@ const dom = (() => {
             const projectName = document.createElement("button");
             projectName.textContent = project.title;
             projectName.addEventListener("click", () => {
-                projectIndex = array.indexOf(project);
-                setActiveProject()
+                projects.setProjectIndex(array.indexOf(project));
+                projects.setActiveProject()
                 updateTasksProjectName()
             })
 
             const deleteBtn = document.createElement("button");
             deleteBtn.textContent = "X";
             deleteBtn.addEventListener("click", () => {
-                projectIndex = array.indexOf(project);
+                projects.setProjectIndex(array.indexOf(project));
                 openDeleteProjectModal()
             })
 
             const editBtn = document.createElement("button");
             editBtn.textContent = "edit";
             editBtn.addEventListener("click", () => {
-                projectIndex = array.indexOf(project);
+                projects.setProjectIndex(array.indexOf(project));
+                projects.setActiveProject()
                 openEditProjectModal()
             }) 
 
@@ -90,9 +82,6 @@ const dom = (() => {
                 else {
                     projects.addProject(title);
                     input.required = false
-                    projectIndex = projects.projectList.length - 1
-                    setActiveProject()
-                    console.log(activeProject)
             }}
 
         function openDeleteProjectModal() {
@@ -103,7 +92,7 @@ const dom = (() => {
         function openEditProjectModal() {
             const dialog = document.getElementById("editProjectModal")
             const input = document.getElementById("editProjectName")
-            input.value = activeProject.title
+            input.value = projects.getActiveProject().title
             dialog.showModal();
             input.required = true
         }
@@ -112,7 +101,7 @@ const dom = (() => {
         if (!projects.projectList.length) {
             tasksProjectName.textContent = "Create a project!"
         } else {
-        tasksProjectName.textContent = activeProject.title
+        tasksProjectName.textContent = projects.getActiveProject().title
     }}
 
     function updateScreen() {
@@ -122,7 +111,6 @@ const dom = (() => {
 
     return {
         updateScreen,
-        activeProject
             }
 })()
 

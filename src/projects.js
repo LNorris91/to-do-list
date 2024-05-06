@@ -1,3 +1,4 @@
+import { get } from "lodash";
 
 console.log("projects.js has been initialized")
 
@@ -25,13 +26,28 @@ const projects = (() => {
         }
     }
 
+    let projectIndex = "0"
+    function setProjectIndex(number) {
+        return projectIndex = number
+    }
+    let activeProject = projectList[projectIndex]
+    function setActiveProject() {
+        return activeProject = projectList[projectIndex]
+    }
+    const getActiveProject = () => activeProject
+    const getProjectIndex = () => projectIndex
+
     function addProject(title) {
         const newProject = new Project(title);
         projectList.push(newProject);
-    }
+        projectIndex = projectList.length - 1
+        setActiveProject()
+        console.log(activeProject.title)
+        }
 
     function deleteProject(index) {
         projectList.splice(index, 1);
+        activeProject = projectList[0];
     }
 
     function editProject(index) {
@@ -47,8 +63,12 @@ const projects = (() => {
         projectList,
         addProject,
         deleteProject,
-        editProject
-    }
+        editProject,
+        getActiveProject,
+        setActiveProject,
+        getProjectIndex,
+        setProjectIndex
+        }
 })()
 
 export default projects;
