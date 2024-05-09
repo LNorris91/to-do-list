@@ -1,10 +1,8 @@
 import _ from "lodash";
-import {formatDistanceToNow, format} from "date-fns";
 import dom from "./dom";
 import projects from "./projects";
 import tasks from "./tasks";
 import './style.css'
 
-// tasks.createTask("Groceries", "go to meijer and get groceries", "today", "medium")
+tasks.createTask("Groceries", "go to meijer and get groceries", "2024-06-09", "medium")
 dom.updateScreen()
-

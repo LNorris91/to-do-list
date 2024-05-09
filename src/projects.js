@@ -1,5 +1,3 @@
-import { get } from "lodash";
-
 console.log("projects.js has been initialized")
 
 const projects = (() => {
@@ -12,7 +10,7 @@ const projects = (() => {
                 {
                     title: "title here!",
                     description: "this is where your description would go",
-                    date: "2024-10-23 ",
+                    date: "2024-10-23",
                     priority:"low"
                 }
             ]

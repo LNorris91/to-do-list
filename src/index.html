@@ -14,37 +14,76 @@
             <h1>Your Projects</h1>
             <div class="projectContainer"></div>
             <button class="newProject">+</button>
-            <!--Add Project Modal-->
-            <dialog id="addProjectModal">
-                <form method="dialog">
-                    <div>
-                        <label for="projectName">What's the name of your project?</label>
-                        <input type="text" name="projectName" id="projectName">
-                    </div>
-                    <button id="createProjectBtn">create</button>
-                </form>
-            </dialog>
-            <!--Edit Project Modal-->
-            <dialog id="editProjectModal">
-                <form method="dialog">
-                    <div>
-                        <label for="editProjectName">New project name:</label>
-                        <input type="text" name="editProjectName" id="editProjectName">
-                    </div>
-                    <button id="editProjectBtn">save</button>
-                </form>
-            </dialog>
-            <!--Delete Project Modal-->
-            <dialog id="deleteProjectModal">
-                <form method="dialog">
-                    <button id="confirmProjectDelete">delete</button>
-                    <button>cancel</button>
-                </form>
-            </dialog>
         </div>
         <div class="mainBody">
             <h1 class="tasksProjectName"></h1>
+            <button class="addTaskBtn">+</button>
+            <div class="tasksContainer"></div>
         </div>
     </div>
+    <!--Add Project Modal-->
+    <dialog id="addProjectModal">
+        <form method="dialog">
+            <div>
+                <label for="projectName">What's the name of your project?</label>
+                <input type="text" name="projectName" id="projectName">
+            </div>
+            <button id="createProjectBtn">create</button>
+        </form>
+    </dialog>
+    <!--Edit Project Modal-->
+    <dialog id="editProjectModal">
+        <form method="dialog">
+            <div>
+                <label for="editProjectName">New project name:</label>
+                <input type="text" name="editProjectName" id="editProjectName">
+            </div>
+            <button id="editProjectBtn">save</button>
+        </form>
+    </dialog>
+    <!--Delete Project Modal-->
+    <dialog id="deleteProjectModal">
+        <form method="dialog">
+            <button id="confirmProjectDelete">delete</button>
+            <button>cancel</button>
+        </form>
+    </dialog>
+    <!--Edit Task Modal-->
+    <dialog id="editTaskModal">
+        <form method="dialog">
+            <button id="editTaskCloseBtn" autofocus>X</button>
+            <div>
+                <label for="editTaskName">Name:</label>
+                <input type="text" name="editTaskName" id="editTaskName">
+            </div>
+            <div>
+                <label for="editTaskDescription">Description:</label>
+                <input type="text" name="editTaskDescription" id="editTaskDescription">
+            </div>
+            <div>
+                <label for="editTaskDate">Date Due:</label>
+                <input type="date" name="editTaskDate" id="editTaskDate">
+            </div>
+            <div>
+                <label for="editTaskPriority">Priority:</label>
+                <select name="editTaskPriority" id="editTaskPriority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <button id="updateTask">Update</button>
+            <button id="completeTask">Completed?</button>
+            <button id="deleteTask">Delete</button>
+            <button id="createTask">Add Task</button>
+        </form>
+    </dialog>
+    <!--Delete Project Modal-->
+    <dialog id="deleteTaskModal">
+        <form method="dialog">
+            <button id="confirmTaskDelete">delete</button>
+            <button>cancel</button>
+        </form>
+    </dialog>
 </body>
 </html>

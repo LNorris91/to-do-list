@@ -1,4 +1,5 @@
-import { create } from "lodash";
+import {formatDistanceToNow, locale} from "date-fns";
+
 import tasks from "./tasks";
 import projects from "./projects";
 
@@ -11,8 +12,19 @@ const dom = (() => {
     const removeProjectBtn = document.getElementById("confirmProjectDelete");
     const editProjectBtn = document.getElementById("editProjectBtn");
     const tasksProjectName = document.querySelector(".tasksProjectName");
+    const tasksContainer = document.querySelector(".tasksContainer");
+    const editTaskCloseBtn = document.getElementById("editTaskCloseBtn");
+    const updateTaskBtn = document.getElementById("updateTask");
+    const completeTaskBtn = document.getElementById("completeTask");
+    const deleteTaskBtn = document.getElementById("deleteTask");
+    const addTaskBtn = document.querySelector(".addTaskBtn");
+    const createTaskBtn = document.getElementById("createTask");
+    const confirmTaskDelete = document.getElementById("confirmTaskDelete");
+
+    let taskIndex = ''
     
-    newProjectBtn.addEventListener("click", () => openProjectModal());
+    newProjectBtn.addEventListener("click", openProjectModal);
+
     createProjectBtn.addEventListener("click", () => {
         createProject()
         updateScreen()
@@ -26,6 +38,28 @@ const dom = (() => {
         updateScreen()
     })
 
+    editTaskCloseBtn.addEventListener("click", closeEditTaskModal);
+
+    updateTaskBtn.addEventListener("click", () => {
+        tasks.editTask(taskIndex)
+        showTasks()
+    })
+
+    completeTaskBtn.addEventListener("click", toggleComplete)
+
+    deleteTaskBtn.addEventListener("click", openDeleteTaskModal)
+
+    addTaskBtn.addEventListener("click", openAddTaskModal)
+
+    createTaskBtn.addEventListener("click", createTask)
+
+    confirmTaskDelete.addEventListener("click", () => {
+        tasks.deleteTask(taskIndex)
+        showTasks()
+    })
+
+
+
     function showProjects() {
         sideBar.textContent = '';
         let array = projects.projectList;
@@ -38,7 +72,7 @@ const dom = (() => {
             projectName.addEventListener("click", () => {
                 projects.setProjectIndex(array.indexOf(project));
                 projects.setActiveProject()
-                updateTasksProjectName()
+                updateScreen()
             })
 
             const deleteBtn = document.createElement("button");
@@ -82,7 +116,8 @@ const dom = (() => {
                 else {
                     projects.addProject(title);
                     input.required = false
-            }}
+            }
+        }
 
         function openDeleteProjectModal() {
             let dialog = document.getElementById("deleteProjectModal");
@@ -102,11 +137,169 @@ const dom = (() => {
             tasksProjectName.textContent = "Create a project!"
         } else {
         tasksProjectName.textContent = projects.getActiveProject().title
+        }
+    }
+
+
+    function showTasks() {
+        if(!projects.projectList.length) {
+            tasksContainer.textContent = ''
+            addTaskBtn.style.visibility = "hidden"
+        } else {
+        
+        addTaskBtn.style.visibility = "visible"
+        const tasks = projects.getActiveProject().tasks
+        tasksContainer.textContent = ''
+
+        tasks.forEach((task, index) => {
+            const taskDiv = document.createElement("div")
+            const taskName = document.createElement("p")
+            const taskDate = document.createElement("p")
+
+            taskDiv.classList.add("task")
+            taskDiv.dataset.index = index
+
+            taskName.textContent = tasks[index].title
+            taskDate.textContent = `Due in ${formatDistanceToNow(tasks[index].date)}`
+
+            taskDiv.addEventListener("click", () => {
+                updateTaskBtn.style.visibility = "visible"
+                completeTaskBtn.style.visibility = "visible"
+                deleteTaskBtn.style.visibility = "visible"
+                createTaskBtn.style.visibility = "hidden"
+                openEditTasksModal(index)
+            })
+
+            let priority = tasks[index].priority
+            switch (priority) {
+                case "low":
+                    taskDiv.classList.add("low")
+                    if (taskDiv.className.includes("medium")) {
+                        taskDiv.classList.remove("medium")
+                    } else if (taskDiv.className.includes("high")) {
+                        taskDiv.classList.remove("high")
+                    }
+                    break;
+                case "medium":
+                    taskDiv.classList.add("medium")
+                    if (taskDiv.className.includes("low")) {
+                        taskDiv.classList.remove("low")
+                    } else if (taskDiv.className.includes("high")) {
+                        taskDiv.classList.remove("high")
+                    }
+                    break;
+                case "high":
+                    taskDiv.classList.add("high")
+                    if (taskDiv.className.includes("medium")) {
+                        taskDiv.classList.remove("medium")
+                    } else if (taskDiv.className.includes("low")) {
+                        taskDiv.classList.remove("low")
+                    }
+                    break;
+            }
+
+            taskDiv.appendChild(taskName)
+            taskDiv.appendChild(taskDate)
+            tasksContainer.appendChild(taskDiv)
+            })
+
+        }
+    }
+
+    function openEditTasksModal(index) {
+        const dialog = document.getElementById("editTaskModal")
+        const task = projects.getActiveProject().tasks[index]
+        let name = document.getElementById("editTaskName")
+        let description = document.getElementById("editTaskDescription")
+        let date = document.getElementById("editTaskDate")
+        let priority = document.getElementById("editTaskPriority")
+
+        name.required = true
+        date.required = true
+
+        name.value = task.title
+        description.value = task.description
+        date.value = task.date
+        priority.value = task.priority
+
+        taskIndex = index
+
+        dialog.showModal()
+    }
+
+    function closeEditTaskModal() {
+        const dialog = document.getElementById("editTaskModal")
+        let name = document.getElementById("editTaskName")
+        let date = document.getElementById("editTaskDate")
+        let priority = document.getElementById("editTaskPriority")
+
+        name.required = false
+        date.required = false
+        priority.required = false
+
+        dialog.close()
+    }
+
+    function toggleComplete() {
+        const tasks = document.querySelectorAll(".task")
+        tasks.forEach((task) => {
+            if(task.dataset.index == taskIndex) {
+                if(task.className.includes("completed")) {
+                    task.classList.remove("completed")
+                } else {
+                        task.classList.add("completed")          
+            }}
+        })
+    }
+
+    function openDeleteTaskModal() {
+        let dialog = document.getElementById("deleteTaskModal");
+        dialog.showModal();
+    }
+
+    function openAddTaskModal() {
+        const dialog = document.getElementById("editTaskModal")
+        let name = document.getElementById("editTaskName")
+        let description = document.getElementById("editTaskDescription")
+        let date = document.getElementById("editTaskDate")
+        let priority = document.getElementById("editTaskPriority")
+
+        name.required = true
+        date.required = true
+        priority.required = true
+
+        updateTaskBtn.style.visibility = "hidden"
+        completeTaskBtn.style.visibility = "hidden"
+        deleteTaskBtn.style.visibility = "hidden"
+        createTaskBtn.style.visibility = "visible"
+
+        name.value = ''
+        description.value = ''
+        date.value = ''
+        priority.value = ''
+
+        dialog.showModal()
+    }
+
+    function createTask() {
+        let name = document.getElementById("editTaskName").value
+        let description = document.getElementById("editTaskDescription").value
+        let date = document.getElementById("editTaskDate").value
+        let priority = document.getElementById("editTaskPriority").value
+
+        if(name == '' || date == '' || priority == '') {
+            return
+        } else {
+            tasks.createTask(name, description, date, priority)
+            showTasks()
     }}
+
+
 
     function updateScreen() {
         showProjects()
         updateTasksProjectName()
+        showTasks()
     }
 
     return {
