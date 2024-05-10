@@ -7,6 +7,7 @@
 </head>
 <body>
     <header>
+        <button id="menu"><img src="/src/icons/menu.svg" alt=""></button>
         <h1>To-Do List</h1>
     </header>
     <div class="content">
@@ -17,7 +18,7 @@
         </div>
         <div class="mainBody">
             <h1 class="tasksProjectName"></h1>
-            <button class="addTaskBtn">+</button>
+            <button class="addTaskBtn">Add Task</button>
             <div class="tasksContainer"></div>
         </div>
     </div>
@@ -44,21 +45,26 @@
     <!--Delete Project Modal-->
     <dialog id="deleteProjectModal">
         <form method="dialog">
+            <p>
+                Are you sure you want to delete?
+            </p>
             <button id="confirmProjectDelete">delete</button>
-            <button>cancel</button>
+            <button autofocus>cancel</button>
         </form>
     </dialog>
     <!--Edit Task Modal-->
     <dialog id="editTaskModal">
         <form method="dialog">
             <button id="editTaskCloseBtn" autofocus>X</button>
+            <button id="completeTask">Completed?</button>
             <div>
                 <label for="editTaskName">Name:</label>
                 <input type="text" name="editTaskName" id="editTaskName">
             </div>
             <div>
                 <label for="editTaskDescription">Description:</label>
-                <input type="text" name="editTaskDescription" id="editTaskDescription">
+                <textarea name="editTaskDescription" id="editTaskDescription" rows="3">
+                    </textarea>
             </div>
             <div>
                 <label for="editTaskDate">Date Due:</label>
@@ -72,15 +78,21 @@
                     <option value="high">High</option>
                 </select>
             </div>
-            <button id="updateTask">Update</button>
-            <button id="completeTask">Completed?</button>
-            <button id="deleteTask">Delete</button>
-            <button id="createTask">Add Task</button>
+            <div class="modalBtns">
+                <div class="editModalBtns">
+                    <button id="updateTask">Update</button>
+                    <button id="deleteTask">Delete</button>
+                </div>
+                <button id="createTask">Add Task</button>
+            </div>
         </form>
     </dialog>
-    <!--Delete Project Modal-->
+    <!--Delete Task Modal-->
     <dialog id="deleteTaskModal">
         <form method="dialog">
+            <p>
+                Are you sure you want to delete?
+            </p>
             <button id="confirmTaskDelete">delete</button>
             <button>cancel</button>
         </form>

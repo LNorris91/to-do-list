@@ -11,6 +11,7 @@ const tasks = (() => {
             this.description = description,
             this.date = date,
             this.priority = priority
+            this.completed = false
         }
     }
 
@@ -36,10 +37,16 @@ const tasks = (() => {
         project.tasks[index].priority = priority
     }
 
+    function toggleComplete(index) {
+        const project = projects.getActiveProject()
+        project.tasks[index].completed = project.tasks[index].completed === true ? false : true
+    }
+
     return {
         createTask,
         deleteTask,
-        editTask
+        editTask,
+        toggleComplete
     }
      
 })()

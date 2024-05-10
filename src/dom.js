@@ -1,4 +1,4 @@
-import {formatDistanceToNow, locale} from "date-fns";
+import {formatDistanceToNow, isPast} from "date-fns";
 
 import tasks from "./tasks";
 import projects from "./projects";
@@ -6,7 +6,9 @@ import projects from "./projects";
 console.log("dom.js has been initialized")
 
 const dom = (() => {
-    const sideBar = document.querySelector(".projectContainer");
+    const menu = document.getElementById("menu");
+    const sideBar = document.querySelector(".sideBar")
+    const projectContainer = document.querySelector(".projectContainer");
     const newProjectBtn = document.querySelector(".newProject");
     const createProjectBtn = document.getElementById("createProjectBtn");
     const removeProjectBtn = document.getElementById("confirmProjectDelete");
@@ -22,6 +24,8 @@ const dom = (() => {
     const confirmTaskDelete = document.getElementById("confirmTaskDelete");
 
     let taskIndex = ''
+
+    menu.addEventListener("click", showMenu)
     
     newProjectBtn.addEventListener("click", openProjectModal);
 
@@ -45,7 +49,9 @@ const dom = (() => {
         showTasks()
     })
 
-    completeTaskBtn.addEventListener("click", toggleComplete)
+    completeTaskBtn.addEventListener("click", () => {
+        tasks.toggleComplete(taskIndex)
+        showTasks()})
 
     deleteTaskBtn.addEventListener("click", openDeleteTaskModal)
 
@@ -61,13 +67,15 @@ const dom = (() => {
 
 
     function showProjects() {
-        sideBar.textContent = '';
+        projectContainer.textContent = '';
         let array = projects.projectList;
 
         array.forEach((project) => {
-            const projectDiv = document.createElement("div")
+            const projectDiv = document.createElement("div");
+            projectDiv.classList = "project"
 
             const projectName = document.createElement("button");
+            projectName.classList = "projectName"
             projectName.textContent = project.title;
             projectName.addEventListener("click", () => {
                 projects.setProjectIndex(array.indexOf(project));
@@ -76,6 +84,7 @@ const dom = (() => {
             })
 
             const deleteBtn = document.createElement("button");
+            deleteBtn.classList = "projectDelete"
             deleteBtn.textContent = "X";
             deleteBtn.addEventListener("click", () => {
                 projects.setProjectIndex(array.indexOf(project));
@@ -83,6 +92,7 @@ const dom = (() => {
             })
 
             const editBtn = document.createElement("button");
+            editBtn.classList = "projectEdit"
             editBtn.textContent = "edit";
             editBtn.addEventListener("click", () => {
                 projects.setProjectIndex(array.indexOf(project));
@@ -94,7 +104,7 @@ const dom = (() => {
             projectDiv.appendChild(editBtn)
             projectDiv.appendChild(deleteBtn)
 
-            sideBar.appendChild(projectDiv)
+            projectContainer.appendChild(projectDiv)
         })
 
         console.log(projects.projectList)
@@ -159,8 +169,14 @@ const dom = (() => {
             taskDiv.classList.add("task")
             taskDiv.dataset.index = index
 
+            taskName.classList.add("taskName")
             taskName.textContent = tasks[index].title
-            taskDate.textContent = `Due in ${formatDistanceToNow(tasks[index].date)}`
+
+            if (isPast(tasks[index].date)) {
+                taskDate.textContent = "Overdue!"
+            } else {
+                taskDate.textContent = `Due in ${formatDistanceToNow(tasks[index].date)}`
+                }
 
             taskDiv.addEventListener("click", () => {
                 updateTaskBtn.style.visibility = "visible"
@@ -194,6 +210,18 @@ const dom = (() => {
                         taskDiv.classList.remove("medium")
                     } else if (taskDiv.className.includes("low")) {
                         taskDiv.classList.remove("low")
+                    }
+                    break;
+            }
+
+            let complete = tasks[index].completed
+            switch (complete) {
+                case true:
+                    taskDiv.classList.add("completed")
+                    break;
+                case false:
+                    if (taskDiv.className.includes("completed")) {
+                        taskDiv.classList.remove("completed")
                     }
                     break;
             }
@@ -240,18 +268,6 @@ const dom = (() => {
         dialog.close()
     }
 
-    function toggleComplete() {
-        const tasks = document.querySelectorAll(".task")
-        tasks.forEach((task) => {
-            if(task.dataset.index == taskIndex) {
-                if(task.className.includes("completed")) {
-                    task.classList.remove("completed")
-                } else {
-                        task.classList.add("completed")          
-            }}
-        })
-    }
-
     function openDeleteTaskModal() {
         let dialog = document.getElementById("deleteTaskModal");
         dialog.showModal();
@@ -294,7 +310,9 @@ const dom = (() => {
             showTasks()
     }}
 
-
+    function showMenu() {
+        sideBar.style.visibility = sideBar.style.visibility === "visible" ? "hidden" : "visible"
+    }
 
     function updateScreen() {
         showProjects()

@@ -5,13 +5,14 @@ const projects = (() => {
 
     const projectList = [
         {
-            title: "general",
+            title: "sample project",
             tasks: [
                 {
                     title: "title here!",
                     description: "this is where your description would go",
                     date: "2024-10-23",
-                    priority:"low"
+                    priority:"low",
+                    completed: false
                 }
             ]
         },
