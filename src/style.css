@@ -228,6 +228,7 @@ form input {
     background: none;
     border-style: none;
     border-bottom: 1px solid white;
+    border-radius: 0px;
     font-family: "my-font", sans-serif;
     font-size: 0.8rem;
 }
@@ -304,5 +305,9 @@ textarea {
     }
     header button {
         visibility: visible;
+    }
+    img {
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
     }
 }
