@@ -26,6 +26,7 @@ header {
 header button {
     background: none;
     border: none;
+    color: white;
     position: absolute;
     left: 25px;
     visibility: hidden;
@@ -34,12 +35,12 @@ header button:hover {
     cursor: pointer;
 }
 
-img {
+/* img {
     -webkit-filter: invert(100%);
     filter: invert(100%);
     height: 20px;
     pointer-events: none;
-}
+} */
 header h1 {
     margin: 0px
 
