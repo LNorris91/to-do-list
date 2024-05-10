@@ -306,8 +306,4 @@ textarea {
     header button {
         visibility: visible;
     }
-    img {
-        -webkit-filter: invert(100%);
-        filter: invert(100%);
-    }
 }
