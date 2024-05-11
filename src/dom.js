@@ -311,7 +311,15 @@ const dom = (() => {
     }}
 
     function showMenu() {
-        sideBar.style.visibility = sideBar.style.visibility === "visible" ? "hidden" : "visible"
+        if (sideBar.className.includes("show")) {
+            sideBar.classList.remove("show")
+            sideBar.classList.add("hide")
+        } else if (sideBar.className.includes("hide")) {
+            sideBar.classList.remove("hide")
+            sideBar.classList.add("show")
+        } else {
+            sideBar.classList.add("show")
+        }
     }
 
     function updateScreen() {

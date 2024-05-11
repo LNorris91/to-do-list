@@ -35,12 +35,6 @@ header button:hover {
     cursor: pointer;
 }
 
-/* img {
-    -webkit-filter: invert(100%);
-    filter: invert(100%);
-    height: 20px;
-    pointer-events: none;
-} */
 header h1 {
     margin: 0px
 
@@ -266,6 +260,8 @@ textarea {
 #completeTask{
     margin-bottom: 10px;
     font-size: 1rem;
+    border: 1px solid white;
+    border-radius: 5px;
 }
 #createTask {
     position: relative;
@@ -296,14 +292,48 @@ textarea {
 }
 
 @media (max-width: 800px) {
+    header button {
+        visibility: visible;
+    }
     .sideBar {
-        visibility: hidden;
+        /* visibility: hidden; */
         position: absolute;
         background-color: black;
         height: 100%;
         width: 250px;
+        z-index: 1;
+        transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
     }
-    header button {
-        visibility: visible;
+
+    .sideBar.show {
+        animation: slide-in 0.5s forwards;
+        -webkit-animation: slide-in 0.5s forwards;
     }
+
+    .sideBar.hide {
+        animation: slide-out 0.5s forwards;
+        -webkit-animation: slide-out 0.5s forwards;
+    }
+
+    @keyframes slide-in {
+        100% { transform: translateX(0%); }
+    }
+    
+    @-webkit-keyframes slide-in {
+        100% { -webkit-transform: translateX(0%); }
+    }
+        
+    @keyframes slide-out {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(-100%); }
+    }
+    
+    @-webkit-keyframes slide-out {
+        0% { -webkit-transform: translateX(0%); }
+        100% { -webkit-transform: translateX(-100%); }
+    }
+
+
+    
 }
