@@ -28,7 +28,8 @@ header button {
     border: none;
     color: white;
     position: absolute;
-    left: 25px;
+    left: 35px;
+    top: 30px;
     visibility: hidden;
 }
 header button:hover {
