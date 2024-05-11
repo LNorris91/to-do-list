@@ -29,7 +29,7 @@ header button {
     color: white;
     position: absolute;
     left: 35px;
-    top: 30px;
+    top: 40px;
     visibility: hidden;
 }
 header button:hover {
@@ -304,6 +304,11 @@ textarea {
 @media (max-width: 800px) {
     header button {
         visibility: visible;
+    }
+
+    header h1 {
+        position: absolute;
+        right: 30px;
     }
     .sideBar {
         position: absolute;
