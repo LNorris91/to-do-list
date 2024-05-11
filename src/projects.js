@@ -1,8 +1,9 @@
+import { indexOf } from "lodash";
+
 console.log("projects.js has been initialized")
 
 const projects = (() => {
     
-
     const projectList = [
         {
             title: "sample project",
@@ -22,6 +23,7 @@ const projects = (() => {
         constructor(title) {
             this.title = title
             this.tasks = []
+            this.key = ''
         }
     }
 
@@ -39,12 +41,15 @@ const projects = (() => {
     function addProject(title) {
         const newProject = new Project(title);
         projectList.push(newProject);
-        projectIndex = projectList.length - 1
+        projectIndex = projectList.length - 1;
+        newProject.key = projectIndex
         setActiveProject()
-        console.log(activeProject.title)
+        incrementProjectId()
+        localStorage.setItem(`project-${projectIndex}`, JSON.stringify(newProject))
         }
 
     function deleteProject(index) {
+        localStorage.removeItem(`project-${projectList[index].key}`)
         projectList.splice(index, 1);
         activeProject = projectList[0];
     }
@@ -56,7 +61,31 @@ const projects = (() => {
                 else {
                     projectList[index].title = name
                     input.require = false
-    }}
+                }
+        localStorage.setItem(`project-${index}`, JSON.stringify(projectList[index]))
+    }
+
+    function getProjects() {
+        activeProject = projectList[0]
+        if (localStorage.length !== 0) {
+            for (let i = 0 ; i <= getProjectId() ; i++) {
+                localStorage.getItem(`project-${i}`) ? projectList.push(JSON.parse(localStorage.getItem(`project-${i}`))) : null;
+            }
+        } 
+    }
+
+    function getProjectId() {
+        if (!localStorage.getItem("projectId")) {
+            localStorage.setItem("projectId", 0);
+        }
+        return localStorage.getItem("projectId");
+    };
+    
+    function incrementProjectId() {
+        let projectId = localStorage.getItem("projectId");
+        projectId++
+        localStorage.setItem("projectId", projectId);
+    };
 
     return {
         projectList,
@@ -66,7 +95,8 @@ const projects = (() => {
         getActiveProject,
         setActiveProject,
         getProjectIndex,
-        setProjectIndex
+        setProjectIndex,
+        getProjects
         }
 })()
 

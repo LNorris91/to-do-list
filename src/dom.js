@@ -106,8 +106,6 @@ const dom = (() => {
 
             projectContainer.appendChild(projectDiv)
         })
-
-        console.log(projects.projectList)
     }
 
         function openProjectModal() {
@@ -149,7 +147,6 @@ const dom = (() => {
         tasksProjectName.textContent = projects.getActiveProject().title
         }
     }
-
 
     function showTasks() {
         if(!projects.projectList.length) {
