@@ -5,18 +5,18 @@ console.log("projects.js has been initialized")
 const projects = (() => {
     
     const projectList = [
-        {
-            title: "sample project",
-            tasks: [
-                {
-                    title: "title here!",
-                    description: "this is where your description would go",
-                    date: "2024-10-23",
-                    priority:"low",
-                    completed: false
-                }
-            ]
-        },
+        // {
+        //     title: "sample project",
+        //     tasks: [
+        //         {
+        //             title: "title here!",
+        //             description: "this is where your description would go",
+        //             date: "2024-10-23",
+        //             priority:"low",
+        //             completed: false
+        //         }
+        //     ]
+        // },
     ];
 
     class Project {
@@ -66,12 +66,12 @@ const projects = (() => {
     }
 
     function getProjects() {
-        activeProject = projectList[0]
         if (localStorage.length !== 0) {
             for (let i = 0 ; i <= getProjectId() ; i++) {
                 localStorage.getItem(`project-${i}`) ? projectList.push(JSON.parse(localStorage.getItem(`project-${i}`))) : null;
             }
         } 
+        activeProject = projectList[0]
     }
 
     function getProjectId() {
