@@ -94,6 +94,8 @@ header h1 {
     flex-grow: 1;
     text-align: start;
     margin-left: 5px;
+    width: 240px;
+    word-wrap: break-word;
 }
 
 .project .projectDelete {
@@ -315,6 +317,12 @@ textarea {
         position: absolute;
         right: 30px;
     }
+
+    .project .projectName {
+        width: 120px;
+        word-wrap: break-word;
+    }
+
     .sideBar {
         position: absolute;
         background-color: black;
